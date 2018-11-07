@@ -12,27 +12,26 @@ package memorias;
 public class Linha {
     private String indice, tag;
     private int bitValidade;
-    Linha cache[];
+    private int tamanho_tag, tamanho_indice, tamanho_offset;    
     
-    public void Linha(int tamanho){
-        cache = new Linha[tamanho];
-        for(int i=0; i<tamanho; i++){
-            cache[i].setIndice(Integer.toString(i, 2));
-            cache[i].setBitValidade(0);
-        }
-    }
-    
-    public String getIndice() {
-        return indice;
+    public void Linha(int tam_tag, int tam_indice, int tam_offset){
+        this.tamanho_tag = tam_tag;
+        this.tamanho_indice = tam_indice;
+        this.tamanho_offset = tam_offset;
     }
 
-        public String getTag() {
-        return tag;
+    public String getIndice() {
+        return indice;
     }
 
     public void setIndice(String indice) {
         this.indice = indice;
     }
+
+    public String getTag() {
+        return tag;
+    }
+
     public void setTag(String tag) {
         this.tag = tag;
     }
@@ -44,6 +43,31 @@ public class Linha {
     public void setBitValidade(int bitValidade) {
         this.bitValidade = bitValidade;
     }
+
+    public int getTamanho_tag() {
+        return tamanho_tag;
+    }
+
+    public void setTamanho_tag(int tamanho_tag) {
+        this.tamanho_tag = tamanho_tag;
+    }
+
+    public int getTamanho_indice() {
+        return tamanho_indice;
+    }
+
+    public void setTamanho_indice(int tamanho_indice) {
+        this.tamanho_indice = tamanho_indice;
+    }
+
+    public int getTamanho_offset() {
+        return tamanho_offset;
+    }
+
+    public void setTamanho_offset(int tamanho_offset) {
+        this.tamanho_offset = tamanho_offset;
+    }
+    
     
     
 }
