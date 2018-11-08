@@ -14,28 +14,26 @@ public class CalculoEndereco {
     
     public void calculo_de_endereco(int linhas, int end){
         int end2 = end;
-        while(end<=1){ // endereco irá assumir o valor de n onde 2^n é a quantidade de linhas
+        while(end>=1){ // endereco irá assumir o valor de n onde 2^n é a quantidade de linhas
             end = end/2;
             endereco ++;
         }
-        while(linhas<=1){ //tag irá assumir o valor de n onde 2^n é a quentidade do endereço
+        while(linhas>=1){ //tag irá assumir o valor de n onde 2^n é a quantidade do endereço
             linhas = linhas/2;
             deslocamento ++; 
         }
-        
         tag = end2 - endereco - deslocamento ;
-        
     }
     
     public void enderecoDefault(){
         int end = 1024;
         int end2 = 32;
         int offset = 32;
-        while(end<=1){ // endereco irá assumir o valor de n onde 2^n é a quantidade de linhas
+        while(end>=1){ // endereco irá assumir o valor de n onde 2^n é a quantidade de linhas
             end = end/2;
             endereco ++;
         }
-        while(offset<=1){ //deslocamento irá assumir o valor de n onde 2^n é a quentidade do endereço
+        while(offset>=1){ //deslocamento irá assumir o valor de n onde 2^n é a quentidade do endereço
             offset = offset/2;
             deslocamento ++; 
         }

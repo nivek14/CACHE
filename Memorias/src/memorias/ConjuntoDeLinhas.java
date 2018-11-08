@@ -9,11 +9,11 @@ package memorias;
  *
  * @author MOTTA-PC
  */
-public class Bloco {
-    private Linha bloco[];
+public class ConjuntoDeLinhas {
+    private Linha[] bloco;
     private int tam_tag, tam_indice, tam_desloc;
     
-    public Bloco(int quantidade_de_linhas, int t_tag, int t_ind, int t_des){
+    public ConjuntoDeLinhas(int quantidade_de_linhas, int t_tag, int t_ind, int t_des){
         Linha blocos[] = new Linha[quantidade_de_linhas];
         this.bloco = blocos;
         

@@ -17,13 +17,17 @@ public class Memorias {
      */
     public static void main(String[] args) {
         /*int tam=0, tam_bloco=0, lines=0, tam_barramento=0, map=0, nvl=0;
-        GeradorCache cache1 = new GeradorCache(tam, tam_bloco, lines, tam_barramento, map, nvl);*/
-        String bin = "0111";
+        GeradorCache cache1 = new GeradorCache(tam, tam_bloco, lines, tam_barramento, map, nvl);*/                
+             
+        GeradorCache cache1 = new GeradorCache();
+        
+        
+        /*String bin = "0111";
         int numero = Integer.parseInt(bin, 2);//Nome da variavel e tipo, 2 = binary. Converte o binario para int
         System.out.println(numero);
 		
 
         String bin2 = Integer.toBinaryString(7);//Converter um valor int para binario e atribui o valor a um tipo string
-        System.out.println(bin2);
+        System.out.println(bin2);*/
     }
 }
