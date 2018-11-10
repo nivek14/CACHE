@@ -10,11 +10,12 @@ package memorias;
  * @author MOTTA-PC
  */
 public class Linha {
-    private String indice, tag;
-    private int bitValidade;
+    private String indice;
+    private int tag;
+    private int bitValidade=0;
     private int tamanho_tag, tamanho_indice, tamanho_offset;    
     
-    public void Linha(int tam_tag, int tam_indice, int tam_offset){
+    public Linha(int tam_tag, int tam_indice, int tam_offset){
         this.tamanho_tag = tam_tag;
         this.tamanho_indice = tam_indice;
         this.tamanho_offset = tam_offset;
@@ -28,11 +29,11 @@ public class Linha {
         this.indice = indice;
     }
 
-    public String getTag() {
+    public int getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(int tag) {
         this.tag = tag;
     }
 

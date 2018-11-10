@@ -7,22 +7,22 @@ package memorias;
  */
 public class GeradorCache {
     private int QntConjuntos, tamanho_bloco, linhas, tamanho_barramento, mapeamento, niveis;
-    ConjuntoDeLinhas[] memoria;
+    public ConjuntoDeLinhas[] memoria;
+    
     CalculoEndereco endereco = new CalculoEndereco();
     // tipos de mapeamento:
     // mapeamento direto - 0
     // mapeamento totalmente assossiativo - 1
     // mapeamento assossiativo -2, 4, etc;
     // ****** nivel é referente aos niveis da cache valores de 1 até ***********
-    public GeradorCache(int qntConj, int tam_bloco, int lines, int tam_barramento, int map, int nvl) {
+    public GeradorCache(int qntConj, int tam_bloco, int map) {
         this.QntConjuntos = qntConj;
         this.tamanho_bloco = tam_bloco;
-        this.linhas = lines;
-        this.tamanho_barramento = tam_barramento;
         this.mapeamento = map;
-        this.niveis = nvl;
-        this.endereco.calculo_de_endereco(linhas, tamanho_barramento);
+        quantidadeDeLinhas();
+        MetodosDeMapeamento();
     }
+    
     public GeradorCache(int qntConj, int tam_bloco, int lines , int tam_barramento, int nvl) { //é definido por padrão mapeamento direto
         this.QntConjuntos = qntConj;
         this.tamanho_bloco = tam_bloco;
@@ -30,17 +30,21 @@ public class GeradorCache {
         this.tamanho_barramento = tam_barramento;
         this.mapeamento = 0;
         this.niveis = nvl;
-        this.endereco.calculo_de_endereco(linhas, tamanho_barramento);
-        
+        quantidadeDeLinhas();
+        MetodosDeMapeamento();
     }
+    
     // memoria default
     public GeradorCache(){
-        this.QntConjuntos = 1024;
+        this.linhas = 1024;
         this.tamanho_bloco = 4; //4bytes
         this.mapeamento = 0; // mapeamento direto
         this.niveis = 1;
-        this.endereco.enderecoDefault();
         MetodosDeMapeamento();
+    }
+    // ******************** METODO PARA IDENTIFICAR A QUANTIDADE DE LINHAS ***********
+    private void quantidadeDeLinhas(){
+            this.linhas = this.QntConjuntos;
     }
     //    ***************** METODOS DE BUSCA DE INFORMAÇÃO *********************
     public void buscaElementos(String endereco){
@@ -52,14 +56,19 @@ public class GeradorCache {
         switch (this.getMapeamento()) {
         // mapeamento direto
             case 0:
+                this.endereco.calculo_de_endereco_MapDireto(this.tamanho_bloco, this.linhas);
                 memoria = new ConjuntoDeLinhas[1];
                 memoria[0] = MapeamentoDireto();
                 break;
         // mapeamento totalmente associativo
             case 1:
+                this.endereco.enderecoMapeamentoTotalmenteAcossiativo(tamanho_bloco);
+                memoria = new ConjuntoDeLinhas[1];
+                memoria[0] = ConjuntoTotalmenteAssociativo();
                 break;
         // mapeamento 2 associativo
             case 2:
+                
                 break;
         // mapeamento 4 associativo
             case 4:
@@ -70,7 +79,12 @@ public class GeradorCache {
     }
     
     private ConjuntoDeLinhas MapeamentoDireto(){        
-        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), endereco.getEndereco(), endereco.getDeslocamento());
+        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), endereco.getEndereco(), endereco.getDeslocamento(),this.mapeamento);
+        return newCache;
+    }
+    
+    private ConjuntoDeLinhas ConjuntoTotalmenteAssociativo(){        
+        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), 0, endereco.getDeslocamento(), this.mapeamento);
         return newCache;
     }
     
