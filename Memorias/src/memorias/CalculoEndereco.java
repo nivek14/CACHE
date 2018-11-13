@@ -29,14 +29,26 @@ public class CalculoEndereco {
         tag = end - endereco - deslocamento ;
     }
     
-    public void enderecoMapeamentoTotalmenteAcossiativo(int tamBloco){
+    public void enderecoMapeamentoTotalmenteAssociativo(int tamBloco){
         int end = 32;
         while(tamBloco>=1){ //tag irá assumir o valor de n onde 2^n é a quantidade do endereço
             tamBloco = tamBloco/2;
             deslocamento ++; 
         }
         deslocamento--;
-         tag = end -  deslocamento ;
+        tag = end -  deslocamento ;
+    }
+    
+    public void enderecoNAss(int tamBloco, int associatividade){
+        int end =32;
+        endereco=0;
+        deslocamento=2;
+        while(associatividade >=1){
+            associatividade = associatividade/2;
+            endereco++;
+        }
+        endereco --;
+        tag = end - endereco - deslocamento;
     }
     
     public void enderecoDefault(){

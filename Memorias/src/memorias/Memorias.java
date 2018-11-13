@@ -45,7 +45,15 @@ public class Memorias {
         cache2.memoria[0].buscaPalavra(bin,1);
         bin = "10000000000000001100000000110001";
         cache2.memoria[0].buscaPalavra(bin,1);
-        
+       
+        System.out.println("CACHE 3");
+        GeradorCache cache3 = new GeradorCache(512,8,2);
+        bin = "10000000000000001100000000110001";
+        cache3.memoria[0].buscaPalavra(bin,1);
+        bin = "10000000000000001100000000110101";
+        cache3.memoria[0].buscaPalavra(bin,1);
+        bin = "10000000000000001100000000111101";
+        cache3.memoria[0].buscaPalavra(bin,1);
         /*String bin = "0111";
         int numero = Integer.parseInt(bin, 2);//Nome da variavel e tipo, 2 = binary. Converte o binario para int
         System.out.println(numero);

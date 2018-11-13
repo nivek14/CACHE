@@ -83,13 +83,31 @@ public class ConjuntoDeLinhas {
             bloco[numero].setTag(valTag);
         }
     }
+    
+    public void buscaPalavraNAssociativo(String tag, String indice, String offset){
+        //System.out.println(tag + " " + indice + " " + offset + " ");
+        int numero = Integer.parseInt(indice, 2);//Nome da variavel e tipo, 2 = binary. Converte o binario para int
+        //System.out.println(numero);
+        
+        int valTag = Integer.parseInt(tag, 2);
+        if(bloco[numero].getTag() == valTag){
+            System.out.println("HIT");
+        }
+        else{
+            System.out.println("MISS");
+            bloco[numero].setTag(valTag);
+        }
+    }
+    
     public void buscaPalavra(String palavra, int mapeamento){
         if(mapeamento == 0){
             buscaPalavraMapeamentoDireto(palavra);
         }
-        if(mapeamento == 1 ){
+        else if(mapeamento == 1 ){
             buscaPalavraTotalmenteAssociativa(palavra);
         }
+        else 
+            System.out.println("ERROrR");
     }
     
     

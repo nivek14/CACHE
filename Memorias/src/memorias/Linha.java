@@ -13,6 +13,8 @@ public class Linha {
     private String indice;
     private int tag;
     private int bitValidade=0;
+    private boolean bitFifo=false;
+    private int offset;
     private int tamanho_tag, tamanho_indice, tamanho_offset;    
     
     public Linha(int tam_tag, int tam_indice, int tam_offset){
@@ -67,6 +69,22 @@ public class Linha {
 
     public void setTamanho_offset(int tamanho_offset) {
         this.tamanho_offset = tamanho_offset;
+    }
+
+    public boolean isBitFifo() {
+        return bitFifo;
+    }
+
+    public void setBitFifo(boolean bitFifo) {
+        this.bitFifo = bitFifo;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
     
     
