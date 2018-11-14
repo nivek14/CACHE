@@ -44,9 +44,14 @@ public class PoliticaDeSubstituicao {
             cache[i+1].setIndice(indice);
             cache[i+1].setOffset(valOff);
         }
-        
-        
+              
     }
+    
+    
+    
+    
+    
+    
     
     
 }
