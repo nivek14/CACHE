@@ -5,7 +5,8 @@ public class InterfaceCache extends javax.swing.JFrame {
     private int quant_conjuntos,tam_bloco,tip_map,tip_subs;
 
     public InterfaceCache() {
-        initComponents();
+        initComponents();   // irá iniciar a interface
+        setLocationRelativeTo(null);    // irá centralizar a interface quando ela for executada
     }
 
     //=========================== Não Aterar ======================================================================================
@@ -32,6 +33,7 @@ public class InterfaceCache extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cache Simulator");
 
         label_qtd_conjuntos.setText("Quantidade de Conjuntos:");
 
@@ -40,11 +42,6 @@ public class InterfaceCache extends javax.swing.JFrame {
         label_mapeamento.setText("Tipo de Mapeamento:");
 
         mapeamento_direto.setText("Mapeamento Direto");
-        mapeamento_direto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mapeamento_diretoActionPerformed(evt);
-            }
-        });
 
         mapeamentoTot_assoc.setText("Mapeamento Totalmente Associativo");
 
@@ -55,11 +52,6 @@ public class InterfaceCache extends javax.swing.JFrame {
         label_subs.setText("Politica de Substituição:");
 
         subs_random.setText("Random");
-        subs_random.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subs_randomActionPerformed(evt);
-            }
-        });
 
         subs_fifo.setText("FIFO");
 
@@ -75,37 +67,40 @@ public class InterfaceCache extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(label_qtd_conjuntos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(qtd_conjuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_tamanho_bloco)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tamanho_bloco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label_mapeamento)
-                                    .addComponent(mapeamento_direto)
-                                    .addComponent(mapeamento4_assoc)
-                                    .addComponent(mapeamento2_assoc)
-                                    .addComponent(mapeamentoTot_assoc)))
-                            .addComponent(label_subs)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(subs_fifo)
-                                .addGap(8, 8, 8)
-                                .addComponent(subs_random))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(label_tamanho_bloco)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tamanho_bloco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(mapeamento_direto)
+                                            .addComponent(mapeamento4_assoc)
+                                            .addComponent(mapeamento2_assoc)
+                                            .addComponent(mapeamentoTot_assoc)
+                                            .addComponent(label_mapeamento)))
+                                    .addComponent(label_subs)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(subs_fifo)
+                                        .addGap(8, 8, 8)
+                                        .addComponent(subs_random)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
+                        .addGap(188, 188, 188)
                         .addComponent(btn_enviar)))
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +109,7 @@ public class InterfaceCache extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label_qtd_conjuntos)
                     .addComponent(qtd_conjuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label_tamanho_bloco)
                     .addComponent(tamanho_bloco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,6 +119,7 @@ public class InterfaceCache extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(11, 11, 11))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_mapeamento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(mapeamento_direto)
@@ -139,43 +135,46 @@ public class InterfaceCache extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(subs_fifo)
                     .addComponent(subs_random))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btn_enviar)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     //=========================== Não Aterar ======================================================================================
-    
-    
-    
-    
-    
-  
-    
-    
-    private void mapeamento_diretoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapeamento_diretoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mapeamento_diretoActionPerformed
 
-    private void subs_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subs_randomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_subs_randomActionPerformed
-
-    
     
     
     
     // ============================= Metodo que irá definir o que será feito quando os dados forem enviados ======================
     private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
       
+        int aux1=0,aux2=0;
+        
+        //------------- verificando se o campo de conjuntos foi preenchido -----
         System.out.println(qtd_conjuntos.getText());
-        quant_conjuntos = Integer.parseInt(qtd_conjuntos.getText());
+        if(qtd_conjuntos.getText().trim().equals("")){
+            aux1 = 1;
+        }
+        else{
+            quant_conjuntos = Integer.parseInt(qtd_conjuntos.getText());
+        }
+        //----------------------------------------------------------------------
         
+        
+        //------- verificando se o campo do tamanho do bloco foi preenchido-----
         System.out.println(tamanho_bloco.getText());
-        tam_bloco = Integer.parseInt(tamanho_bloco.getText());
+        if(tamanho_bloco.getText().trim().equals("")){
+            aux2 = 1;
+        }
+        else{
+            tam_bloco = Integer.parseInt(tamanho_bloco.getText());
+        }
+        //----------------------------------------------------------------------
         
+        
+        //----------------------------------------------------------------------
         if(mapeamento_direto.isSelected() == true){
             tip_map = 1;
         }
@@ -199,6 +198,36 @@ public class InterfaceCache extends javax.swing.JFrame {
         else if(subs_random.isSelected() == true){
             tip_subs = 2;
         }
+        //----------------------------------------------------------------------
+        
+        
+        //------------------ criando cache default -----------------------------
+        if((aux1 == 1) && 
+                (aux2 == 1) &&
+               (tamanho_bloco.getText().trim().equals("")) && 
+                (mapeamento_direto.isSelected() == false) && 
+                (mapeamento2_assoc.isSelected() == false) && 
+                (mapeamento4_assoc.isSelected() == false) && 
+                (mapeamentoTot_assoc.isSelected() == false) && 
+                (subs_fifo.isSelected() == false) && 
+                (subs_random.isSelected() == false)){
+            
+            System.out.printf("Cache default será criada\n");
+            
+            GeradorCache cache1 = new GeradorCache(); // construtor da cache default
+            String bin = "10000000000000001100000000110001";
+            
+            cache1.memoria[0].buscaPalavra(bin,0);
+            cache1.memoria[0].buscaPalavra(bin,0);
+            cache1.memoria[0].buscaPalavra(bin,0);
+            bin = "10000000000000001010000000110001";
+            cache1.memoria[0].buscaPalavra(bin,0);
+            cache1.memoria[0].buscaPalavra(bin,0);
+            bin = "10000000000000001010000100110011";
+            cache1.memoria[0].buscaPalavra(bin,0);
+            
+        }
+        //----------------------------------------------------------------------
         
         System.out.println(quant_conjuntos + 1);
         System.out.println(tam_bloco + 1);
@@ -208,9 +237,8 @@ public class InterfaceCache extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btn_enviarActionPerformed
     //=============================================================================================================================
-    
-    
    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -243,9 +271,6 @@ public class InterfaceCache extends javax.swing.JFrame {
         });
     }
 
-    
-    
-    
  
  //=================================================== Não Alterar =================================================================
  
