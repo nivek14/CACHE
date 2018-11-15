@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package memorias;
 
-/**
- *
- * @author MOTTA-PC
- */
 public class ConjuntoDeLinhas {
+    
     public Linha[] bloco;
     private int tam_tag, tam_indice, tam_desloc;
+    private int count_miss=0,count_hit=0,count_missCap=0,count_missComp=0;
+    private int tot_acessos=0;
     private int qnt_Linhas;
     private int tipoDeMapeamento;
+    
     public ConjuntoDeLinhas(int quantidade_de_linhas, int t_tag, int t_ind, int t_des, int mapeamento){
         this.bloco = new Linha[quantidade_de_linhas];
         this.tam_tag = t_tag;
@@ -33,7 +28,7 @@ public class ConjuntoDeLinhas {
     
     public void buscaPalavraTotalmenteAssociativa(String palavra){
         String tag, offset;
-        int i=0;
+        int i;
         tag = palavra.substring(0,tam_tag);
          offset = palavra.substring(tam_tag,tam_tag+tam_desloc);
          
@@ -41,6 +36,7 @@ public class ConjuntoDeLinhas {
          for(i=0;i<bloco.length;i++){
              if(bloco[i].getTag()==valTag){
                  System.out.println("HIT");
+                 count_hit += 1;
                  break;
              }
              else if(i==bloco.length-1){ // a tag não foi encontrada, então deve-se colocala em uma posição ainda nao ocupada
@@ -49,16 +45,20 @@ public class ConjuntoDeLinhas {
                  bloco[valor].setTag(valTag);
                  bloco[valor].setBitValidade(1);
                  System.out.println("MISS CAPACIDADE");
+                 count_missCap +=1;
+                 count_miss += 1;
                  break;
              }
              if(bloco[i].getBitValidade()==0){
                 bloco[i].setTag(valTag);
                 bloco[i].setBitValidade(1);
                 System.out.println("MISS COMPULSORIO");
+                count_missComp += 1;
+                count_miss += 1;
                 break;
              }
          }
-         
+         tot_acessos += 1;
     }
 
     public void buscaPalavraMapeamentoDireto(String palavra){
@@ -77,11 +77,14 @@ public class ConjuntoDeLinhas {
         int valTag = Integer.parseInt(tag, 2);
         if(bloco[numero].getTag() == valTag){
             System.out.println("HIT");
+            count_hit += 1;
         }
         else{
             System.out.println("MISS");
+            count_miss += 1;
             bloco[numero].setTag(valTag);
         }
+        tot_acessos += 1;
     }
     
     public void buscaPalavraNAssociativo(String tag, String indice, String offset){
@@ -92,11 +95,14 @@ public class ConjuntoDeLinhas {
         int valTag = Integer.parseInt(tag, 2);
         if(bloco[numero].getTag() == valTag){
             System.out.println("HIT");
+            count_miss += 1;
         }
         else{
             System.out.println("MISS");
+            count_miss += 1;
             bloco[numero].setTag(valTag);
         }
+        tot_acessos += 1;
     }
     
     public void buscaPalavra(String palavra, int mapeamento){
@@ -107,10 +113,10 @@ public class ConjuntoDeLinhas {
             buscaPalavraTotalmenteAssociativa(palavra);
         }
         else 
-            System.out.println("ERROrR");
+            System.out.println("ERROR");
     }
     
-    
+    //----------------- Metodos get e set --------------------------------------
     public Linha[] getBloco() {
         return bloco;
     }
@@ -143,5 +149,24 @@ public class ConjuntoDeLinhas {
         this.tam_desloc = tam_desloc;
     }
     
+    public int getTotMiss(){
+        return count_miss;
+    }
+    
+    public int getMissCompulsorio(){
+        return count_missComp;
+    }
+    
+    public int getMissCapacidade(){
+        return count_missCap;
+    }
+    
+    public int getTotHit(){
+        return count_hit;
+    }
+    
+    public int getTotAcessos(){
+        return tot_acessos;
+    }
     
 }

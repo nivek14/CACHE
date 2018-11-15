@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package memorias;
 
-/**
- *
- * @author MOTTA-PC
- */
 public class Linha {
+    
     private String indice;
     private int tag;
     private int bitValidade=0;
@@ -23,6 +15,7 @@ public class Linha {
         this.tamanho_offset = tam_offset;
     }
 
+    //------------- Metodos get e set ------------------------------------------
     public String getIndice() {
         return indice;
     }

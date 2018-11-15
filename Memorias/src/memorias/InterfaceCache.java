@@ -1,9 +1,12 @@
 package memorias;
 
+import javax.swing.JOptionPane;
+
 public class InterfaceCache extends javax.swing.JFrame {
     
     private int quant_conjuntos,tam_bloco,tip_map,tip_subs;
-
+    private int tot_hits,tot_misses,tot_compulsorio,tot_capacidade,tot_acessos;
+            
     public InterfaceCache() {
         initComponents();   // irá iniciar a interface
         setLocationRelativeTo(null);    // irá centralizar a interface quando ela for executada
@@ -174,9 +177,9 @@ public class InterfaceCache extends javax.swing.JFrame {
         //----------------------------------------------------------------------
         
         
-        //----------------------------------------------------------------------
+        //---------- verificando se as checkboxes foram marcadas ---------------
         if(mapeamento_direto.isSelected() == true){
-            tip_map = 1;
+            tip_map = 0;
         }
         
         else if(mapeamento2_assoc.isSelected() == true){
@@ -184,11 +187,11 @@ public class InterfaceCache extends javax.swing.JFrame {
         }
         
         else if(mapeamento4_assoc.isSelected() == true){
-            tip_map = 3;
+            tip_map = 4;
         }
         
         else if(mapeamentoTot_assoc.isSelected() == true){
-            tip_map = 4;
+            tip_map = 1;
         }
         
         if(subs_fifo.isSelected() == true){
@@ -215,8 +218,8 @@ public class InterfaceCache extends javax.swing.JFrame {
             System.out.printf("Cache default será criada\n");
             
             GeradorCache cache1 = new GeradorCache(); // construtor da cache default
-            String bin = "10000000000000001100000000110001";
             
+            String bin = "10000000000000001100000000110001";
             cache1.memoria[0].buscaPalavra(bin,0);
             cache1.memoria[0].buscaPalavra(bin,0);
             cache1.memoria[0].buscaPalavra(bin,0);
@@ -226,13 +229,26 @@ public class InterfaceCache extends javax.swing.JFrame {
             bin = "10000000000000001010000100110011";
             cache1.memoria[0].buscaPalavra(bin,0);
             
+            tot_acessos = cache1.acessos();
+            tot_hits = cache1.hits();
+            tot_misses = cache1.misses();
+            tot_compulsorio = cache1.compulsorio();
+            tot_capacidade = cache1.capacidade();
+            
+            JOptionPane.showMessageDialog(this,"Total de acessos: " + tot_acessos + "\n" + 
+                                             "Total de hits: " + tot_hits + "\n" + 
+                                             "Total de misses: " + tot_misses + "\n" 
+                                             + "Misses compulsórios: " + tot_compulsorio + "\n" 
+                                              + "Misses de capacidade: " + tot_capacidade);
+            
         }
         //----------------------------------------------------------------------
         
-        System.out.println(quant_conjuntos + 1);
-        System.out.println(tam_bloco + 1);
-        System.out.println(tip_map);
-        System.out.println(tip_subs);
+        System.out.println(tot_acessos);
+        System.out.println(tot_hits);
+        System.out.println(tot_misses);
+        System.out.println(tot_compulsorio);
+        System.out.println(tot_capacidade);
         
         
     }//GEN-LAST:event_btn_enviarActionPerformed

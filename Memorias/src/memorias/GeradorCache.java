@@ -1,20 +1,20 @@
-
 package memorias;
 
-/**
- *
- * @author MOTTA-PC
- */
 public class GeradorCache {
+    
     private int QntConjuntos, tamanho_bloco, linhas, tamanho_barramento, mapeamento, niveis,subs;
     public ConjuntoDeLinhas[] memoria;
     
     CalculoEndereco endereco = new CalculoEndereco();
+    
     // tipos de mapeamento:
     // mapeamento direto - 0
     // mapeamento totalmente assossiativo - 1
     // mapeamento assossiativo -2, 4, etc;
+    // politica de substituição FIFO - 1
+    // politica de substituição Random - 2
     // ****** nivel é referente aos niveis da cache valores de 1 até ***********
+    
     public GeradorCache(int qntConj, int tam_bloco, int map,int subs) {
         this.QntConjuntos = qntConj;
         this.tamanho_bloco = tam_bloco;
@@ -24,13 +24,14 @@ public class GeradorCache {
         MetodosDeMapeamento();
     }
     
-    public GeradorCache(int qntConj, int tam_bloco, int lines , int tam_barramento, int nvl) { //é definido por padrão mapeamento direto
+    public GeradorCache(int qntConj, int tam_bloco, int lines , int tam_barramento, int nvl,int subs) { //é definido por padrão mapeamento direto
         this.QntConjuntos = qntConj;
         this.tamanho_bloco = tam_bloco;
         this.linhas = lines;
         this.tamanho_barramento = tam_barramento;
         this.mapeamento = 0;
         this.niveis = nvl;
+        this.subs = subs;
         quantidadeDeLinhas();
         MetodosDeMapeamento();
     }
@@ -41,6 +42,7 @@ public class GeradorCache {
         this.tamanho_bloco = 4; //4bytes
         this.mapeamento = 0; // mapeamento direto
         this.niveis = 1;
+        this.subs = 2; // politica de substituição random
         MetodosDeMapeamento();
     }
     // ******************** METODO PARA IDENTIFICAR A QUANTIDADE DE LINHAS ***********
@@ -119,6 +121,31 @@ public class GeradorCache {
     private ConjuntoDeLinhas ConjuntoNAssociativo(){
         ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), 0, endereco.getDeslocamento(), this.mapeamento);
         return newCache;        
+    }
+    
+    public int acessos(){
+        int aux = mapeamento;
+        return memoria[aux].getTotAcessos(); 
+    }
+    
+    public int hits(){
+        int aux = mapeamento;
+        return memoria[aux].getTotHit();
+    }
+    
+    public int misses(){
+        int aux = mapeamento;
+        return memoria[aux].getTotMiss();
+    }
+    
+    public int compulsorio(){
+        int aux = mapeamento;
+        return memoria[aux].getMissCompulsorio();
+    }
+    
+    public int capacidade(){
+        int aux = mapeamento;
+        return memoria[aux].getMissCapacidade();
     }
     
     //****************************************
