@@ -1,22 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package endereco;
-
-/**
- *
- * @author Cliente
- */
 
 import java.io.*;
 import java.util.Random;
 public class GeradorDeEnderecos {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    
+    public void gerarArquivos(int tamanho) {
           try {
                    File file = new File("arqTexto1.txt");
                    PrintWriter outFile = new PrintWriter(new FileWriter(file));
@@ -25,13 +13,13 @@ public class GeradorDeEnderecos {
 
                    int numGerado = 0;
                    Random r = new Random();
-                   for(int i=0;i<100;i++){
+                   for(int i=0;i<tamanho/2;i++){
                         numGerado=r.nextInt(10);
                         outFile.println(numGerado);
                         out.writeInt(numGerado);
                         System.out.println(numGerado);
                    }
-                   for(int i=0;i<100;i++){
+                   for(int i=0;i<tamanho/2;i++){
                         numGerado=r.nextInt(1000);
                         outFile.println(numGerado);
                         out.writeInt(numGerado);

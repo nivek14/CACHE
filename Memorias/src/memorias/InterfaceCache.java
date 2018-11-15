@@ -1,11 +1,14 @@
 package memorias;
 
 import javax.swing.JOptionPane;
+import endereco.GeradorDeEnderecos;
 
 public class InterfaceCache extends javax.swing.JFrame {
     
     private int quant_conjuntos,tam_bloco,tip_map,tip_subs;
     private int tot_hits,tot_misses,tot_compulsorio,tot_capacidade,tot_acessos;
+    private int quantidade_end;
+    private float miss_ratio,hit_ratio;
             
     public InterfaceCache() {
         initComponents();   // irá iniciar a interface
@@ -32,6 +35,10 @@ public class InterfaceCache extends javax.swing.JFrame {
         subs_random = new javax.swing.JCheckBox();
         subs_fifo = new javax.swing.JCheckBox();
         btn_enviar = new javax.swing.JButton();
+        gerador = new javax.swing.JLabel();
+        gerador_enderecos = new javax.swing.JButton();
+        quantEnd = new javax.swing.JLabel();
+        quantidade_enderecos = new javax.swing.JTextField();
 
         jLabel2.setText("jLabel2");
 
@@ -65,45 +72,74 @@ public class InterfaceCache extends javax.swing.JFrame {
             }
         });
 
+        gerador.setText("Gerar Endereços:");
+
+        gerador_enderecos.setText("Gerar");
+        gerador_enderecos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerador_enderecosActionPerformed(evt);
+            }
+        });
+
+        quantEnd.setText("Quantidade de Endereços:");
+
+        quantidade_enderecos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quantidade_enderecosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_qtd_conjuntos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(qtd_conjuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(label_tamanho_bloco)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tamanho_bloco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(mapeamento_direto)
-                                            .addComponent(mapeamento4_assoc)
-                                            .addComponent(mapeamento2_assoc)
-                                            .addComponent(mapeamentoTot_assoc)
-                                            .addComponent(label_mapeamento)))
-                                    .addComponent(label_subs)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(subs_fifo)
-                                        .addGap(8, 8, 8)
-                                        .addComponent(subs_random)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(10, 10, 10)
+                        .addComponent(gerador_enderecos)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(btn_enviar)))
-                .addContainerGap(191, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(label_qtd_conjuntos)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(qtd_conjuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(quantEnd)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(quantidade_enderecos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(label_tamanho_bloco)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(tamanho_bloco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(mapeamento_direto)
+                                                .addComponent(mapeamento4_assoc)
+                                                .addComponent(mapeamento2_assoc)
+                                                .addComponent(mapeamentoTot_assoc)
+                                                .addComponent(label_mapeamento)))
+                                        .addComponent(label_subs)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addComponent(subs_fifo)
+                                            .addGap(8, 8, 8)
+                                            .addComponent(subs_random)))
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(178, 178, 178)
+                                .addComponent(btn_enviar)))
+                        .addContainerGap(191, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(gerador)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +174,15 @@ public class InterfaceCache extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(subs_fifo)
                     .addComponent(subs_random))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(quantEnd)
+                    .addComponent(quantidade_enderecos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(gerador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gerador_enderecos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(btn_enviar)
                 .addGap(29, 29, 29))
         );
@@ -229,19 +273,26 @@ public class InterfaceCache extends javax.swing.JFrame {
             bin = "10000000000000001010000100110011";
             cache1.memoria[0].buscaPalavra(bin,0);
             
+            
             tot_acessos = cache1.acessos();
             tot_hits = cache1.hits();
             tot_misses = cache1.misses();
             tot_compulsorio = cache1.compulsorio();
             tot_capacidade = cache1.capacidade();
+            hit_ratio =  (float) tot_hits / tot_acessos;
+            miss_ratio = (float) 1 - hit_ratio;
+           
         }
             JOptionPane.showMessageDialog(this,"Total de acessos: " + tot_acessos + "\n" + 
                                              "Total de hits: " + tot_hits + "\n" + 
                                              "Total de misses: " + tot_misses + "\n" 
                                              + "Misses compulsórios: " + tot_compulsorio + "\n" 
-                                              + "Misses de capacidade: " + tot_capacidade);
+                                              + "Misses de capacidade: " + tot_capacidade +
+                    "\n" + "Hit Ratio: " + hit_ratio + "%" + "\n"
+                    + "Miss Ratio: " + miss_ratio + "%" + "\n","Resultados",JOptionPane.INFORMATION_MESSAGE);
             
-        
+            
+           
         //----------------------------------------------------------------------
         
         System.out.println(tot_acessos);
@@ -252,7 +303,37 @@ public class InterfaceCache extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btn_enviarActionPerformed
-    //=============================================================================================================================
+
+    
+    //-------------------------------------------------------------------------------------------------------------------------------
+    private void gerador_enderecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerador_enderecosActionPerformed
+       
+        GeradorDeEnderecos gerar = new GeradorDeEnderecos();
+        
+        gerar.gerarArquivos(quantidade_end);
+        
+        System.out.printf("%d endereços foram gerados\n", quantidade_end);
+        
+    }//GEN-LAST:event_gerador_enderecosActionPerformed
+    //--------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    //--------------------------------------------------------------------------------------------------------------------------------
+    private void quantidade_enderecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantidade_enderecosActionPerformed
+       
+        if(quantidade_enderecos.getText().trim().equals("")){
+            quantidade_end = 200;
+            System.out.printf("Tamanho de arquivo default será criado (200)\n");
+        }
+        
+        else{
+            quantidade_end = Integer.parseInt(quantidade_enderecos.getText());
+            System.out.printf("Tamanho %d selecionado com sucesso\n", quantidade_end);
+        }
+        
+    }//GEN-LAST:event_quantidade_enderecosActionPerformed
+    //-------------------------------------------------------------------------------------------------------------------------------
    
     
     public static void main(String args[]) {
@@ -292,6 +373,8 @@ public class InterfaceCache extends javax.swing.JFrame {
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_enviar;
+    private javax.swing.JLabel gerador;
+    private javax.swing.JButton gerador_enderecos;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label_mapeamento;
@@ -303,6 +386,8 @@ public class InterfaceCache extends javax.swing.JFrame {
     private javax.swing.JCheckBox mapeamentoTot_assoc;
     private javax.swing.JCheckBox mapeamento_direto;
     private javax.swing.JTextField qtd_conjuntos;
+    private javax.swing.JLabel quantEnd;
+    private javax.swing.JTextField quantidade_enderecos;
     private javax.swing.JCheckBox subs_fifo;
     private javax.swing.JCheckBox subs_random;
     private javax.swing.JTextField tamanho_bloco;
