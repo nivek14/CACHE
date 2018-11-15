@@ -9,16 +9,20 @@ public class ConjuntoDeLinhas {
     private int count_miss=0,count_hit=0,count_missCap=0,count_missComp=0;
     private int tot_acessos=0;
     private int qnt_Linhas;
+    private int metodoSubs;
     private int tipoDeMapeamento;
-    
-    public ConjuntoDeLinhas(int quantidade_de_linhas, int t_tag, int t_ind, int t_des, int mapeamento){
+    private PoliticaDeSubstituicao politicaSubs;
+    public ConjuntoDeLinhas(int quantidade_de_linhas, int t_tag, int t_ind, int t_des, int mapeamento, int subst){
         this.bloco = new Linha[quantidade_de_linhas];
         this.tam_tag = t_tag;
         this.tam_indice = t_ind;
         this.tam_desloc = t_des;
         this.qnt_Linhas = quantidade_de_linhas;
         this.tipoDeMapeamento = mapeamento;
+        this.metodoSubs = subst;
+        politicaSubs = new PoliticaDeSubstituicao(bloco);
         gerarLinhas(quantidade_de_linhas);
+        
     }
     
     public void gerarLinhas(int n_linhas){
@@ -30,37 +34,75 @@ public class ConjuntoDeLinhas {
     
     public void buscaPalavraTotalmenteAssociativa(String palavra){
         String tag, offset;
-        int i;
+        int i, contador=0;
         tag = palavra.substring(0,tam_tag);
-         offset = palavra.substring(tam_tag,tam_tag+tam_desloc);
+        offset = palavra.substring(tam_tag,tam_tag+tam_desloc);
          
-         int valTag = Integer.parseInt(tag, 2); // transforma a tag em numero inteiro para melhor encontrar
-         for(i=0;i<bloco.length;i++){
-             if(bloco[i].getTag()==valTag){
-                 System.out.println("HIT");
-                 count_hit += 1;
-                 break;
-             }
-             else if(i==bloco.length-1){ // a tag não foi encontrada, então deve-se colocala em uma posição ainda nao ocupada
-                                           // ou no caso se estiver cheia a cache, colocar em uma posição randomica
-                 int valor = (int) (Math.random() * bloco.length);
-                 bloco[valor].setTag(valTag);
-                 bloco[valor].setBitValidade(1);
-                 System.out.println("MISS CAPACIDADE");
-                 count_missCap +=1;
-                 count_miss += 1;
-                 break;
-             }
-             if(bloco[i].getBitValidade()==0){
-                bloco[i].setTag(valTag);
-                bloco[i].setBitValidade(1);
-                System.out.println("MISS COMPULSORIO");
-                count_missComp += 1;
-                count_miss += 1;
+        int valTag = Integer.parseInt(tag, 2); // transforma a tag em numero inteiro para melhor encontrar
+        for(i=0;i<bloco.length;i++){
+            if(bloco[i].getTag()==valTag){
+                    for(int j=0; j<bloco[i].ConjuntoDePalavras.length;j++){
+                        if(bloco[i].ConjuntoDePalavras[j].getIndex() == Integer.parseInt(offset,2) &&
+                                    bloco[i].ConjuntoDePalavras[j].isBitValidade()==true){
+                            System.out.println("HIT");
+                            count_hit += 1;
+                            j=bloco.length; // sai do for
+                            contador=1;
+                        }
+                    }
+                    if(contador!=1){
+                        bloco[i].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
+                        count_missComp+=1;
+                        count_miss +=1;
+                        contador =1;
+                        System.out.println("Miss, falta de dado");
+                    }
+                    break;
+            }
+            
+            else if(i==bloco.length-1 && contador!=1){ // a tag não foi encontrada, então deve-se colocala em uma posição ainda nao ocupada
+                                           // ou no caso se estiver cheia a cache, colocar em uma posição dependendo do metodo de substituição
+                if(this.metodoSubs == 1){
+                    politicaSubs.SubstituicaoFifo(tag, null, offset);
+                    System.out.println("MISS CAPACIDADE");
+                    count_missCap +=1;
+                    count_miss += 1;
+                }
+                else if(this.metodoSubs==2){
+                    politicaSubs.SubstituicaoRandom(valTag, null, offset);
+                    System.out.println("MISS CAPACIDADE");
+                    count_missCap +=1;
+                    count_miss += 1;
+                }
+                if(i!=0){
+                   bloco[i].setBitFifo(true);
+                   bloco[i-1].setBitFifo(false);
+               }
+               else {
+                   bloco[i].setBitFifo(true);
+                   bloco[bloco.length-1].setBitFifo(false);
+               }
                 break;
-             }
-         }
-         tot_acessos += 1;
+            }
+            if(bloco[i].getBitValidade()==0 && contador!=1){
+               bloco[i].setTag(valTag);
+               bloco[i].setBitValidade(1);
+               bloco[i].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
+               if(i!=0){
+                   bloco[i].setBitFifo(true);
+                   bloco[i-1].setBitFifo(false);
+               }
+               else {
+                   bloco[i].setBitFifo(true);
+                   bloco[bloco.length-1].setBitFifo(false);
+               }
+               System.out.println("MISS COMPULSORIO");
+               count_missComp += 1;
+               count_miss += 1;
+               break;
+            }
+        }
+        tot_acessos += 1;
     }
 
     public void buscaPalavraMapeamentoDireto(String palavra){
@@ -78,7 +120,6 @@ public class ConjuntoDeLinhas {
         //System.out.println(numero);
         int valTag = Integer.parseInt(tag, 2);
         if(bloco[numero].getTag() == valTag){
-            
                 if(bloco[numero].getIndice().equals(indice)){
                     for(int j=0; j< pow(2,tam_desloc);j++){
                         if(bloco[numero].ConjuntoDePalavras[j].getIndex()==Integer.parseInt(offset,2) &&
@@ -95,9 +136,7 @@ public class ConjuntoDeLinhas {
                         System.out.println("Miss compulsório, dado nao encontrado");
                         contadorDeAcertos=1;
                     }
-                    
                 }
-            
             if(contadorDeAcertos!=1){
                 System.out.println("Miss, tag encontrada, mas indice não");
                 bloco[numero].setIndice(indice);
@@ -115,22 +154,74 @@ public class ConjuntoDeLinhas {
         tot_acessos += 1;
     }
     
-    public void buscaPalavraNAssociativo(String tag, String indice, String offset){
-        //System.out.println(tag + " " + indice + " " + offset + " ");
-        int numero = Integer.parseInt(indice, 2);//Nome da variavel e tipo, 2 = binary. Converte o binario para int
-        //System.out.println(numero);
-        
-        int valTag = Integer.parseInt(tag, 2);
-        if(bloco[numero].getTag() == valTag){
-            System.out.println("HIT");
-            count_miss += 1;
-        }
-        else{
-            System.out.println("MISS");
-            count_miss += 1;
-            bloco[numero].setTag(valTag);
+    public void buscaPalavraNAssociativo(String tag, String offset){
+        int i, contador=0;
+        int valTag = Integer.parseInt(tag, 2); // transforma a tag em numero inteiro para melhor encontrar
+        for(i=0;i<bloco.length;i++){
+            if(bloco[i].getTag()==valTag){
+                    for(int j=0; j<bloco[i].ConjuntoDePalavras.length;j++){
+                        if(bloco[i].ConjuntoDePalavras[j].getIndex() == Integer.parseInt(offset,2) &&
+                                    bloco[i].ConjuntoDePalavras[j].isBitValidade()==true){
+                            System.out.println("HIT");
+                            count_hit += 1;
+                            j=bloco.length; // sai do for
+                            contador=1;
+                        }
+                    }
+                    if(contador!=1){
+                        bloco[i].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
+                        count_missComp+=1;
+                        count_miss +=1;
+                        contador =1;
+                        System.out.println("Miss, falta de dado");
+                    }
+                    break;
+            }
+            
+            else if(i==bloco.length-1 && contador!=1){ // a tag não foi encontrada, então deve-se colocala em uma posição ainda nao ocupada
+                                           // ou no caso se estiver cheia a cache, colocar em uma posição dependendo do metodo de substituição
+                if(this.metodoSubs == 1){
+                    politicaSubs.SubstituicaoFifo(tag, null, offset);
+                    System.out.println("MISS CAPACIDADE");
+                    count_missCap +=1;
+                    count_miss += 1;
+                }
+                else if(this.metodoSubs==2){
+                    politicaSubs.SubstituicaoRandom(valTag, null, offset);
+                    System.out.println("MISS CAPACIDADE");
+                    count_missCap +=1;
+                    count_miss += 1;
+                }
+                if(i!=0){
+                   bloco[i].setBitFifo(true);
+                   bloco[i-1].setBitFifo(false);
+               }
+               else {
+                   bloco[i].setBitFifo(true);
+                   bloco[bloco.length-1].setBitFifo(false);
+               }
+                break;
+            }
+            if(bloco[i].getBitValidade()==0 && contador!=1){
+               bloco[i].setTag(valTag);
+               bloco[i].setBitValidade(1);
+               bloco[i].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
+               if(i!=0){
+                   bloco[i].setBitFifo(true);
+                   bloco[i-1].setBitFifo(false);
+               }
+               else {
+                   bloco[i].setBitFifo(true);
+                   bloco[bloco.length-1].setBitFifo(false);
+               }
+               System.out.println("MISS COMPULSORIO");
+               count_missComp += 1;
+               count_miss += 1;
+               break;
+            }
         }
         tot_acessos += 1;
+    
     }
     
     public void buscaPalavra(String palavra, int mapeamento){

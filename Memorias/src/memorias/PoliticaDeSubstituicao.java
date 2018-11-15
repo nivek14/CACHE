@@ -18,6 +18,8 @@ public class PoliticaDeSubstituicao {
         cache[i].setBitValidade(1);
         cache[i].setIndice(indice);
         cache[i].setOffset(Integer.parseInt(offset, 2));
+        cache[i].setBitValidade(0);
+        cache[i].ConjuntoDePalavras[Integer.parseInt(offset, 2)].setBitValidade(true);
         
     }
     
@@ -37,12 +39,16 @@ public class PoliticaDeSubstituicao {
             cache[0].setTag(valTag);
             cache[0].setIndice(indice);
             cache[0].setOffset(valOff);
+            cache[0].setBitValidade(0);
+            cache[0].ConjuntoDePalavras[valOff].setBitValidade(true);
         }
         
         else{
             cache[i+1].setTag(valTag);
             cache[i+1].setIndice(indice);
             cache[i+1].setOffset(valOff);
+            cache[i+1].setBitValidade(0);
+            cache[i+1].ConjuntoDePalavras[valOff].setBitValidade(true);
         }
               
     }

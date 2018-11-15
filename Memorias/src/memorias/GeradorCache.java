@@ -94,32 +94,32 @@ public class GeradorCache {
         conjunto = palavra.substring(endereco.getTag(), endereco.getTag()+endereco.getEndereco());
         offset = palavra.substring(endereco.getTag()+endereco.getEndereco(),endereco.getTag()+endereco.getEndereco()+ endereco.getDeslocamento());
         if((conjunto.equals(00)&& mapeamento == 4) || (conjunto.equals(0) && mapeamento==2)){
-            memoria[0].buscaPalavraNAssociativo(tag, conjunto, offset);
+            memoria[0].buscaPalavraNAssociativo(tag,offset);
         }
         if((conjunto.equals(01)&& mapeamento == 4) || (conjunto.equals(1) && mapeamento==2)){
-            memoria[1].buscaPalavraNAssociativo(tag, conjunto, offset);
+            memoria[1].buscaPalavraNAssociativo(tag, offset);
         }
         if(conjunto.equals(10)&& mapeamento == 4){
-            memoria[2].buscaPalavraNAssociativo(tag, conjunto, offset);
+            memoria[2].buscaPalavraNAssociativo(tag,offset);
         }
         if(conjunto.equals(11)&& mapeamento == 4){
-            memoria[3].buscaPalavraNAssociativo(tag, conjunto, offset);
+            memoria[3].buscaPalavraNAssociativo(tag, offset);
         }
         return memoria[i];
     }
     
     private ConjuntoDeLinhas MapeamentoDireto(){        
-        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), endereco.getEndereco(), endereco.getDeslocamento(),this.mapeamento);
+        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), endereco.getEndereco(), endereco.getDeslocamento(),this.mapeamento, this.subs);
         return newCache;
     }
     
     private ConjuntoDeLinhas ConjuntoTotalmenteAssociativo(){        
-        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), 0, endereco.getDeslocamento(), this.mapeamento);
+        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), 0, endereco.getDeslocamento(), this.mapeamento, this.subs);
         return newCache;
     }
     
     private ConjuntoDeLinhas ConjuntoNAssociativo(){
-        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), 0, endereco.getDeslocamento(), this.mapeamento);
+        ConjuntoDeLinhas newCache = new ConjuntoDeLinhas(this.getLinhas(), endereco.getTag(), 0, endereco.getDeslocamento(), this.mapeamento, this.subs);
         return newCache;        
     }
     
