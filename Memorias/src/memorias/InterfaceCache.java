@@ -234,14 +234,14 @@ public class InterfaceCache extends javax.swing.JFrame {
             tot_misses = cache1.misses();
             tot_compulsorio = cache1.compulsorio();
             tot_capacidade = cache1.capacidade();
-            
+        }
             JOptionPane.showMessageDialog(this,"Total de acessos: " + tot_acessos + "\n" + 
                                              "Total de hits: " + tot_hits + "\n" + 
                                              "Total de misses: " + tot_misses + "\n" 
                                              + "Misses compulsórios: " + tot_compulsorio + "\n" 
                                               + "Misses de capacidade: " + tot_capacidade);
             
-        }
+        
         //----------------------------------------------------------------------
         
         System.out.println(tot_acessos);

@@ -1,5 +1,7 @@
 package memorias;
 
+import static java.lang.Math.pow;
+
 public class ConjuntoDeLinhas {
     
     public Linha[] bloco;
@@ -65,6 +67,7 @@ public class ConjuntoDeLinhas {
         String tag;
         String indice;
         String offset;
+        int contadorDeAcertos=0;
         //System.out.println(Integer.toString(tam_tag) +" "+ Integer.toString(tam_indice)+" "+ Integer.toString(tam_desloc));
         tag = palavra.substring(0,tam_tag);
         indice = palavra.substring(tam_tag, tam_tag+tam_indice);
@@ -73,16 +76,41 @@ public class ConjuntoDeLinhas {
         //System.out.println(tag + " " + indice + " " + offset + " ");
         int numero = Integer.parseInt(indice, 2);//Nome da variavel e tipo, 2 = binary. Converte o binario para int
         //System.out.println(numero);
-        
         int valTag = Integer.parseInt(tag, 2);
         if(bloco[numero].getTag() == valTag){
-            System.out.println("HIT");
-            count_hit += 1;
+            
+                if(bloco[numero].getIndice().equals(indice)){
+                    for(int j=0; j< pow(2,tam_desloc);j++){
+                        if(bloco[numero].ConjuntoDePalavras[j].getIndex()==Integer.parseInt(offset,2) &&
+                                bloco[numero].ConjuntoDePalavras[j].isBitValidade()==true){
+                            System.out.println("HIT");
+                            count_hit += 1;
+                            contadorDeAcertos=1;
+                             j= (int) pow(2,tam_desloc);
+                        }
+                    }
+                    if(contadorDeAcertos!=1){
+                        count_miss += 1;
+                        bloco[numero].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
+                        System.out.println("Miss compulsório, dado nao encontrado");
+                        contadorDeAcertos=1;
+                    }
+                    
+                }
+            
+            if(contadorDeAcertos!=1){
+                System.out.println("Miss, tag encontrada, mas indice não");
+                bloco[numero].setIndice(indice);
+                bloco[numero].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
+                count_miss += 1;
+            }
         }
         else{
             System.out.println("MISS");
             count_miss += 1;
             bloco[numero].setTag(valTag);
+            bloco[numero].setIndice(indice);
+            bloco[numero].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
         }
         tot_acessos += 1;
     }

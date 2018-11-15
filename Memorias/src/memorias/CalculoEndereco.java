@@ -14,14 +14,14 @@ public class CalculoEndereco {
     
     
     
-    public void calculo_de_endereco_MapDireto(int tamBloco, int quantLinhas){
+    public void calculo_de_endereco_MapDireto(int qntPalavras, int quantLinhas){
         int end = 32; // tamanho do barramento
         while(quantLinhas>=1){ // endereco irá assumir o valor de n onde 2^n é a quantidade de linhas
             quantLinhas = quantLinhas/2;
             endereco ++;
         }
-        while(tamBloco>=1){ //tag irá assumir o valor de n onde 2^n é a quantidade do endereço
-            tamBloco = tamBloco/2;
+        while(qntPalavras>=1){ //tag irá assumir o valor de n onde 2^n é a quantidade do endereço
+            qntPalavras = qntPalavras/2;
             deslocamento ++; 
         }
         endereco--;
@@ -42,12 +42,16 @@ public class CalculoEndereco {
     public void enderecoNAss(int tamBloco, int associatividade){
         int end =32;
         endereco=0;
-        deslocamento=2;
         while(associatividade >=1){
             associatividade = associatividade/2;
             endereco++;
         }
         endereco --;
+        while(tamBloco>=1){ //tag irá assumir o valor de n onde 2^n é a quantidade do endereço
+            tamBloco = tamBloco/2;
+            deslocamento ++; 
+        }
+        deslocamento--;
         tag = end - endereco - deslocamento;
     }
     
