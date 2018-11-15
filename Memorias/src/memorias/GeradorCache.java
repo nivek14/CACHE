@@ -84,7 +84,7 @@ public class GeradorCache {
         }
     }
     
-    private ConjuntoDeLinhas BuscaPalavra(String palavra){
+    public ConjuntoDeLinhas BuscaPalavra(String palavra){
         int i=0;
         String tag;
         String conjunto;

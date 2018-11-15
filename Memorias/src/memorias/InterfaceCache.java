@@ -2,6 +2,9 @@ package memorias;
 
 import javax.swing.JOptionPane;
 import endereco.GeradorDeEnderecos;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InterfaceCache extends javax.swing.JFrame {
     
@@ -263,17 +266,12 @@ public class InterfaceCache extends javax.swing.JFrame {
             
             GeradorCache cache1 = new GeradorCache(); // construtor da cache default
             
-            String bin = "10000000000000001100000000110001";
-            cache1.memoria[0].buscaPalavra(bin,0);
-            cache1.memoria[0].buscaPalavra(bin,0);
-            cache1.memoria[0].buscaPalavra(bin,0);
-            bin = "10000000000000001010000000110001";
-            cache1.memoria[0].buscaPalavra(bin,0);
-            cache1.memoria[0].buscaPalavra(bin,0);
-            bin = "10000000000000001010000100110011";
-            cache1.memoria[0].buscaPalavra(bin,0);
-            
-            
+            LeitorDeArquivo gerar = new LeitorDeArquivo();
+            try {
+                gerar.leitorDeTxT(quantidade_end,cache1);
+            } catch (IOException ex) {
+                System.out.println("");
+            }            
             tot_acessos = cache1.acessos();
             tot_hits = cache1.hits();
             tot_misses = cache1.misses();
@@ -282,6 +280,90 @@ public class InterfaceCache extends javax.swing.JFrame {
             hit_ratio =  (float) tot_hits / tot_acessos;
             miss_ratio = (float) 1 - hit_ratio;
            
+        }
+        else if((aux1 == 1) && 
+                (aux2 == 1) &&
+               (tamanho_bloco.getText().trim().equals("")) && 
+                ((mapeamento_direto.isSelected() == true) || 
+                (mapeamento2_assoc.isSelected() == true) ||
+                (mapeamento4_assoc.isSelected() == true) ||
+                (mapeamentoTot_assoc.isSelected() == true))){
+            System.out.println("queijo");
+            if((subs_fifo.isSelected() == true) && 
+                (subs_random.isSelected() == false)){
+                System.out.printf("Cache 2 assoc será criada\n");
+            
+                GeradorCache cache1;
+                if((mapeamento_direto.isSelected() == true) && 
+                (mapeamento2_assoc.isSelected() == false) &&
+                (mapeamento4_assoc.isSelected() == false) &&
+                (mapeamentoTot_assoc.isSelected() == false))
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 0,1); // construtor da cache map direto
+                else if((mapeamento_direto.isSelected() == false) && 
+                (mapeamento2_assoc.isSelected() == true) &&
+                (mapeamento4_assoc.isSelected() == false) &&
+                (mapeamentoTot_assoc.isSelected() == false))
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 2,1); // construtor da cache 4 assoc
+                else if((mapeamento_direto.isSelected() == false) && 
+                (mapeamento2_assoc.isSelected() == false) &&
+                (mapeamento4_assoc.isSelected() == true) &&
+                (mapeamentoTot_assoc.isSelected() == false))
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 4,1); // construtor da cache 4 assoc
+                else    
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 1,1); // construtor da cache tot assoc
+                LeitorDeArquivo gerar = new LeitorDeArquivo();
+                try {
+                    gerar.leitorDeTxT(quantidade_end,cache1);
+                } catch (IOException ex) {
+                    System.out.println("");
+                }            
+                tot_acessos = cache1.acessos();
+                tot_hits = cache1.hits();
+                tot_misses = cache1.misses();
+                tot_compulsorio = cache1.compulsorio();
+                tot_capacidade = cache1.capacidade();
+                hit_ratio =  (float) tot_hits / tot_acessos;
+                miss_ratio = (float) 1 - hit_ratio;
+
+            }
+            else if((subs_fifo.isSelected() == false) && 
+                (subs_random.isSelected() == true)){
+                System.out.printf("Cache 2 assoc será criada\n");
+               GeradorCache cache1;
+               if((mapeamento_direto.isSelected() == true) && 
+                (mapeamento2_assoc.isSelected() == false) &&
+                (mapeamento4_assoc.isSelected() == false) &&
+                (mapeamentoTot_assoc.isSelected() == false))
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 0,2); // construtor da cache map direto
+                else if((mapeamento_direto.isSelected() == false) && 
+                (mapeamento2_assoc.isSelected() == true) &&
+                (mapeamento4_assoc.isSelected() == false) &&
+                (mapeamentoTot_assoc.isSelected() == false))
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 2,2); // construtor da cache 2 assoc
+                else if((mapeamento_direto.isSelected() == false) && 
+                (mapeamento2_assoc.isSelected() == false) &&
+                (mapeamento4_assoc.isSelected() == true) &&
+                (mapeamentoTot_assoc.isSelected() == false))
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 4,2); // construtor da cache 4 assoc
+                else    
+                    cache1= new GeradorCache(quant_conjuntos, tam_bloco, 1,2); // construtor da cache tot assoc
+                LeitorDeArquivo gerar = new LeitorDeArquivo();
+                try {
+                    gerar.leitorDeTxT(quantidade_end,cache1);
+                } catch (IOException ex) {
+                    System.out.println("");
+                }            
+                tot_acessos = cache1.acessos();
+                tot_hits = cache1.hits();
+                tot_misses = cache1.misses();
+                tot_compulsorio = cache1.compulsorio();
+                tot_capacidade = cache1.capacidade();
+                hit_ratio =  (float) tot_hits / tot_acessos;
+                miss_ratio = (float) 1 - hit_ratio;
+            }
+        }
+        else {
+            System.out.println("ALGO NAO FOI SELECIONADO");
         }
             JOptionPane.showMessageDialog(this,"Total de acessos: " + tot_acessos + "\n" + 
                                              "Total de hits: " + tot_hits + "\n" + 

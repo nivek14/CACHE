@@ -4,7 +4,7 @@ import static java.lang.Math.pow;
 
 public class Linha {
     
-    private String indice;
+    private String indice=" ";
     private int tag;
     private int bitValidade=0;
     private boolean bitFifo=false;

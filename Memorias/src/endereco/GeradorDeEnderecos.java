@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Random;
 public class GeradorDeEnderecos {
     
+    
     public void gerarArquivos(int tamanho) {
           try {
                    File file = new File("arqTexto1.txt");

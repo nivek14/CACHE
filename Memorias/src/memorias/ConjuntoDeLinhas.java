@@ -132,6 +132,7 @@ public class ConjuntoDeLinhas {
                     }
                     if(contadorDeAcertos!=1){
                         count_miss += 1;
+                        count_missComp +=1;
                         bloco[numero].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
                         System.out.println("Miss compulsório, dado nao encontrado");
                         contadorDeAcertos=1;
@@ -142,10 +143,12 @@ public class ConjuntoDeLinhas {
                 bloco[numero].setIndice(indice);
                 bloco[numero].ConjuntoDePalavras[Integer.parseInt(offset,2)].setBitValidade(true);
                 count_miss += 1;
+                count_missComp +=1;
             }
         }
         else{
             System.out.println("MISS");
+            count_missComp +=1;
             count_miss += 1;
             bloco[numero].setTag(valTag);
             bloco[numero].setIndice(indice);
