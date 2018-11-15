@@ -2,6 +2,7 @@ package memorias;
 
 import javax.swing.JOptionPane;
 import endereco.GeradorDeEnderecos;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ public class InterfaceCache extends javax.swing.JFrame {
     private int tot_hits,tot_misses,tot_compulsorio,tot_capacidade,tot_acessos;
     private int quantidade_end;
     private float miss_ratio,hit_ratio;
+    private GerarTxt salvando;
             
     public InterfaceCache() {
         initComponents();   // irá iniciar a interface
@@ -42,6 +44,8 @@ public class InterfaceCache extends javax.swing.JFrame {
         gerador_enderecos = new javax.swing.JButton();
         quantEnd = new javax.swing.JLabel();
         quantidade_enderecos = new javax.swing.JTextField();
+        geradortxt = new javax.swing.JLabel();
+        gerar_txt = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -92,6 +96,15 @@ public class InterfaceCache extends javax.swing.JFrame {
             }
         });
 
+        geradortxt.setText("Gerar Txt:");
+
+        gerar_txt.setText("TXT");
+        gerar_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerar_txtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,10 +112,6 @@ public class InterfaceCache extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(gerador_enderecos)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +151,16 @@ public class InterfaceCache extends javax.swing.JFrame {
                         .addContainerGap(191, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(gerador)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(geradortxt)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gerar_txt)
+                                    .addComponent(gerador_enderecos))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +203,11 @@ public class InterfaceCache extends javax.swing.JFrame {
                 .addComponent(gerador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gerador_enderecos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(geradortxt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gerar_txt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(btn_enviar)
                 .addGap(29, 29, 29))
         );
@@ -279,8 +301,13 @@ public class InterfaceCache extends javax.swing.JFrame {
             tot_capacidade = cache1.capacidade();
             hit_ratio =  (float) tot_hits / tot_acessos;
             miss_ratio = (float) 1 - hit_ratio;
+            
+            salvando.setDados(tip_map,tot_hits,tot_misses,tot_compulsorio,tot_capacidade,miss_ratio,hit_ratio);
+            salvando.save();
            
         }
+        
+        //-----------------------------------------------------------------------
         else if( 
                 ((mapeamento_direto.isSelected() == true) || 
                 (mapeamento2_assoc.isSelected() == true) ||
@@ -323,6 +350,8 @@ public class InterfaceCache extends javax.swing.JFrame {
                 miss_ratio = (float) 1 - hit_ratio;
 
             }
+            
+            //------------------------------------------------------------------------------------------------------
             else if((subs_fifo.isSelected() == false) && 
                 (subs_random.isSelected() == true)){
                 System.out.printf("Cache 2 assoc será criada\n");
@@ -359,6 +388,8 @@ public class InterfaceCache extends javax.swing.JFrame {
                 miss_ratio = (float) 1 - hit_ratio;
             }
         }
+        
+        //----------------------------------------------------------------------------------------
         else {
             System.out.println("ALGO NAO FOI SELECIONADO");
         }
@@ -412,6 +443,23 @@ public class InterfaceCache extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_quantidade_enderecosActionPerformed
+    //---------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    //---------------------------- Gerando Txt -------------------------------------------------------------------------------------
+    private void gerar_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerar_txtActionPerformed
+      
+        try {
+            salvando = new GerarTxt();
+            System.out.printf("Arquivo criado com sucesso\n");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+        
+    }//GEN-LAST:event_gerar_txtActionPerformed
     //-------------------------------------------------------------------------------------------------------------------------------
    
     
@@ -454,6 +502,8 @@ public class InterfaceCache extends javax.swing.JFrame {
     private javax.swing.JButton btn_enviar;
     private javax.swing.JLabel gerador;
     private javax.swing.JButton gerador_enderecos;
+    private javax.swing.JLabel geradortxt;
+    private javax.swing.JButton gerar_txt;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label_mapeamento;
