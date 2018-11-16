@@ -125,27 +125,67 @@ public class GeradorCache {
     
     public int acessos(){
         int aux = mapeamento;
-        return memoria[aux].getTotAcessos(); 
+        if(mapeamento==0)
+            return memoria[aux].getTotAcessos(); 
+        else{
+            int soma=0;
+            for(int i=0; i<mapeamento;i++){
+               soma += memoria[i].getTotAcessos();
+            }
+            return soma;
+        }
     }
     
     public int hits(){
         int aux = mapeamento;
-        return memoria[aux].getTotHit();
+        if(mapeamento==0)
+            return memoria[aux].getTotHit(); 
+        else{
+            int soma=0;
+            for(int i=0; i<mapeamento;i++){
+               soma += memoria[i].getTotHit();
+            }
+            return soma;
+        }
     }
     
     public int misses(){
         int aux = mapeamento;
-        return memoria[aux].getTotMiss();
+        if(mapeamento==0)
+            return memoria[aux].getTotMiss(); 
+        else{
+            int soma=0;
+            for(int i=0; i<mapeamento;i++){
+               soma += memoria[i].getTotMiss();
+            }
+            return soma;
+        }
     }
     
     public int compulsorio(){
         int aux = mapeamento;
-        return memoria[aux].getMissCompulsorio();
+        if(mapeamento==0)
+            return memoria[aux].getMissCompulsorio(); 
+        else{
+            int soma=0;
+            for(int i=0; i<mapeamento;i++){
+               soma += memoria[i].getMissCompulsorio();
+            }
+            return soma;
+        }
     }
     
     public int capacidade(){
         int aux = mapeamento;
-        return memoria[aux].getMissCapacidade();
+        if(mapeamento==0)
+            return memoria[aux].getMissCapacidade(); 
+        else{
+            int soma=0;
+            for(int i=0; i<mapeamento;i++){
+               soma += memoria[i].getMissCapacidade();
+            }
+            return soma;
+        }
     }
     
     //****************************************

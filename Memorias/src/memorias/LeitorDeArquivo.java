@@ -58,7 +58,6 @@ public class LeitorDeArquivo {
         }
         else {
             cache.BuscaPalavra(bin);
-            System.out.println("errrrr");
         }
     }
 }

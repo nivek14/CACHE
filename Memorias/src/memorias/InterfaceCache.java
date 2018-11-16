@@ -281,14 +281,11 @@ public class InterfaceCache extends javax.swing.JFrame {
             miss_ratio = (float) 1 - hit_ratio;
            
         }
-        else if((aux1 == 1) && 
-                (aux2 == 1) &&
-               (tamanho_bloco.getText().trim().equals("")) && 
+        else if( 
                 ((mapeamento_direto.isSelected() == true) || 
                 (mapeamento2_assoc.isSelected() == true) ||
                 (mapeamento4_assoc.isSelected() == true) ||
                 (mapeamentoTot_assoc.isSelected() == true))){
-            System.out.println("queijo");
             if((subs_fifo.isSelected() == true) && 
                 (subs_random.isSelected() == false)){
                 System.out.printf("Cache 2 assoc será criada\n");
