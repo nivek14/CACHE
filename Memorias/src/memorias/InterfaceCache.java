@@ -13,7 +13,7 @@ public class InterfaceCache extends javax.swing.JFrame {
     private int tot_hits,tot_misses,tot_compulsorio,tot_capacidade,tot_acessos;
     private int quantidade_end;
     private float miss_ratio,hit_ratio;
-    private GerarTxt salvando;
+    private GerarTxt salvando = new GerarTxt();
             
     public InterfaceCache() {
         initComponents();   // irá iniciar a interface
@@ -302,9 +302,16 @@ public class InterfaceCache extends javax.swing.JFrame {
             hit_ratio =  (float) tot_hits / tot_acessos;
             miss_ratio = (float) 1 - hit_ratio;
             
-            salvando.setDados(tip_map,tot_hits,tot_misses,tot_compulsorio,tot_capacidade,miss_ratio,hit_ratio);
-            salvando.save();
-           
+            salvando.setarTxt(tip_map,tot_hits,tot_misses,tot_compulsorio,tot_capacidade,miss_ratio,hit_ratio);
+            
+            try {
+                salvando.save();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
         
         //-----------------------------------------------------------------------
@@ -451,9 +458,13 @@ public class InterfaceCache extends javax.swing.JFrame {
     private void gerar_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerar_txtActionPerformed
       
         try {
-            salvando = new GerarTxt();
+            
+            
+            salvando.GerarTxtNovo();
             System.out.printf("Arquivo criado com sucesso\n");
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
         }
         
