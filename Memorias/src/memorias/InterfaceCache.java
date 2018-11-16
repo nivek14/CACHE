@@ -373,7 +373,15 @@ public class InterfaceCache extends javax.swing.JFrame {
                 tot_capacidade = cache1.capacidade();
                 hit_ratio =  (float) ((tot_hits * 100) / tot_acessos);
                 miss_ratio = (float) 100 - hit_ratio;
-
+                salvando.setarTxt(tip_map,miss_ratio,hit_ratio);
+            
+            try {
+                salvando.save();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
             
             //------------------------------------------------------------------------------------------------------
@@ -411,6 +419,15 @@ public class InterfaceCache extends javax.swing.JFrame {
                 tot_capacidade = cache1.capacidade();
                 hit_ratio =  (float) ((tot_hits * 100) / tot_acessos);
                 miss_ratio = (float) 100 - hit_ratio;
+                salvando.setarTxt(tip_map,miss_ratio,hit_ratio);
+            
+            try {
+                salvando.save();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
         }
         
@@ -495,7 +512,11 @@ public class InterfaceCache extends javax.swing.JFrame {
     private void gera_graficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gera_graficoActionPerformed
        
         grafico = new Grafico();
-        grafico.criarGrafico();
+        try {
+            grafico.criarGrafico();
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceCache.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_gera_graficoActionPerformed
