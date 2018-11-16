@@ -1,5 +1,11 @@
 package memorias;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -17,12 +23,38 @@ public class Grafico extends JFrame {
         setVisible(true);
     }
     
-    public void criarGrafico(){
+    public void criarGrafico() throws FileNotFoundException, IOException{
+        int[] vetor;
         DefaultCategoryDataset barra = new DefaultCategoryDataset();
-        barra.setValue(1400, "seila", "");
-        barra.setValue(1000,"eoq","");
         
-        JFreeChart grafico = ChartFactory.createBarChart3D("A","B","C",barra,PlotOrientation.VERTICAL,true,true,false);
+        
+        String line, mapeamento;
+        int map;
+        float miss, hit;
+        BufferedReader data = new BufferedReader(new InputStreamReader(new FileInputStream("dados_caches.txt")));
+        while ((line = data.readLine()) != null) {
+ 	    map = Integer.parseInt(line);
+           
+           if(map==0){
+               mapeamento = "Mapeamento direto";
+           }
+           else if (map==1)
+               mapeamento = "Totalmente Associativo";
+           else if( map==2)
+               mapeamento = "2 Associativo";
+           else
+               mapeamento = "4 Associativo";
+           line = data.readLine();
+           miss = Float.parseFloat(line);
+           barra.setValue(miss, mapeamento, "");
+           line = data.readLine();
+           hit = Float.parseFloat(line);
+ 		}
+        data.close();
+       
+       
+       ////////////////////////////////////
+        JFreeChart grafico = ChartFactory.createBarChart3D("TAXA DE MISS","MAPEAMENTOS","MISS RATE",barra,PlotOrientation.VERTICAL,true,true,false);
         ChartPanel painel = new ChartPanel(grafico);
         add(painel);
         
