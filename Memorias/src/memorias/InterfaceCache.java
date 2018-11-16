@@ -14,7 +14,7 @@ public class InterfaceCache extends javax.swing.JFrame {
     private int quantidade_end;
     private float miss_ratio,hit_ratio;
     private GerarTxt salvando = new GerarTxt();
-    private Grafico grafico = new Grafico();;
+    private Grafico grafico;
             
     public InterfaceCache() {
         initComponents();   // irá iniciar a interface
@@ -494,7 +494,7 @@ public class InterfaceCache extends javax.swing.JFrame {
     //--------------------- Gerar o gráfico das caches ----------------------------------------------------------------------------
     private void gera_graficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gera_graficoActionPerformed
        
-       
+        grafico = new Grafico();
         grafico.criarGrafico();
         
         

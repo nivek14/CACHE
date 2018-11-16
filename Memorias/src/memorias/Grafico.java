@@ -18,7 +18,6 @@ public class Grafico extends JFrame {
     }
     
     public void criarGrafico(){
-        
         DefaultCategoryDataset barra = new DefaultCategoryDataset();
         barra.setValue(1400, "seila", "");
         barra.setValue(1000,"eoq","");
