@@ -1,5 +1,6 @@
 package memorias;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,10 +10,12 @@ public class GerarTxt {
     
     private String type_map,qtd_hit,qtd_miss,qtd_compulsorio,qtd_capacidade;
     private String miss_r,hit_r;
-    private PrintWriter arquivo;
+    private File file;
+    private PrintWriter outFile;
     
-   public GerarTxt() throws FileNotFoundException{
-       this.arquivo = new PrintWriter("dados_caches.txt");
+   public GerarTxt() throws FileNotFoundException, IOException{
+      file = new File("arqTexto1.txt");
+     
    }
     
    
@@ -26,14 +29,16 @@ public class GerarTxt {
         this.hit_r = Float.toString(hitRatio);
     }
     
-    public void save(){
-        arquivo.write(type_map);
-        arquivo.write(qtd_hit);
-        arquivo.write(qtd_miss);
-        arquivo.write(qtd_compulsorio);
-        arquivo.write(qtd_capacidade);
-        arquivo.write(miss_r);
-        arquivo.write(hit_r); 
+    public void save() throws IOException{
+        outFile = new PrintWriter(new FileWriter(file));
+        outFile.println(type_map);
+        outFile.println(qtd_hit);
+        outFile.println(qtd_miss);
+        outFile.println(qtd_compulsorio);
+        outFile.println(qtd_capacidade);
+        outFile.println(miss_r);
+        outFile.println(hit_r); 
+        outFile.close();
     }
     
     

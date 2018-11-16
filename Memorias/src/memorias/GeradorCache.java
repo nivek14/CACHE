@@ -93,16 +93,16 @@ public class GeradorCache {
         tag = palavra.substring(0,endereco.getTag());
         conjunto = palavra.substring(endereco.getTag(), endereco.getTag()+endereco.getEndereco());
         offset = palavra.substring(endereco.getTag()+endereco.getEndereco(),endereco.getTag()+endereco.getEndereco()+ endereco.getDeslocamento());
-        if((conjunto.equals(00)&& mapeamento == 4) || (conjunto.equals(0) && mapeamento==2)){
+        if((conjunto.equals("00")&& mapeamento == 4) || (conjunto.equals("0") && mapeamento==2)){
             memoria[0].buscaPalavraNAssociativo(tag,offset);
         }
-        if((conjunto.equals(01)&& mapeamento == 4) || (conjunto.equals(1) && mapeamento==2)){
+        if((conjunto.equals("01")&& mapeamento == 4) || (conjunto.equals("1") && mapeamento==2)){
             memoria[1].buscaPalavraNAssociativo(tag, offset);
         }
-        if(conjunto.equals(10)&& mapeamento == 4){
+        if(conjunto.equals("10")&& mapeamento == 4){
             memoria[2].buscaPalavraNAssociativo(tag,offset);
         }
-        if(conjunto.equals(11)&& mapeamento == 4){
+        if(conjunto.equals("11")&& mapeamento == 4){
             memoria[3].buscaPalavraNAssociativo(tag, offset);
         }
         return memoria[i];
