@@ -14,6 +14,7 @@ public class InterfaceCache extends javax.swing.JFrame {
     private int quantidade_end;
     private float miss_ratio,hit_ratio;
     private GerarTxt salvando = new GerarTxt();
+    private Grafico grafico = new Grafico();;
             
     public InterfaceCache() {
         initComponents();   // irá iniciar a interface
@@ -46,6 +47,8 @@ public class InterfaceCache extends javax.swing.JFrame {
         quantidade_enderecos = new javax.swing.JTextField();
         geradortxt = new javax.swing.JLabel();
         gerar_txt = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        gera_grafico = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -105,6 +108,15 @@ public class InterfaceCache extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Gerar Gráfico:");
+
+        gera_grafico.setText("Gráfico");
+        gera_grafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gera_graficoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,7 +171,9 @@ public class InterfaceCache extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(gerar_txt)
-                                    .addComponent(gerador_enderecos))))
+                                    .addComponent(gerador_enderecos)))
+                            .addComponent(jLabel1)
+                            .addComponent(gera_grafico))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -207,7 +221,11 @@ public class InterfaceCache extends javax.swing.JFrame {
                 .addComponent(geradortxt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gerar_txt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(gera_grafico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(btn_enviar)
                 .addGap(29, 29, 29))
         );
@@ -299,10 +317,10 @@ public class InterfaceCache extends javax.swing.JFrame {
             tot_misses = cache1.misses();
             tot_compulsorio = cache1.compulsorio();
             tot_capacidade = cache1.capacidade();
-            hit_ratio =  (float) tot_hits / tot_acessos;
-            miss_ratio = (float) 1 - hit_ratio;
+            hit_ratio =  (float) ((tot_hits * 100) / tot_acessos);
+            miss_ratio = (float) 100 - hit_ratio;
             
-            salvando.setarTxt(tip_map,tot_hits,tot_misses,tot_compulsorio,tot_capacidade,miss_ratio,hit_ratio);
+            salvando.setarTxt(tip_map,miss_ratio,hit_ratio);
             
             try {
                 salvando.save();
@@ -353,8 +371,8 @@ public class InterfaceCache extends javax.swing.JFrame {
                 tot_misses = cache1.misses();
                 tot_compulsorio = cache1.compulsorio();
                 tot_capacidade = cache1.capacidade();
-                hit_ratio =  (float) tot_hits / tot_acessos;
-                miss_ratio = (float) 1 - hit_ratio;
+                hit_ratio =  (float) ((tot_hits * 100) / tot_acessos);
+                miss_ratio = (float) 100 - hit_ratio;
 
             }
             
@@ -391,8 +409,8 @@ public class InterfaceCache extends javax.swing.JFrame {
                 tot_misses = cache1.misses();
                 tot_compulsorio = cache1.compulsorio();
                 tot_capacidade = cache1.capacidade();
-                hit_ratio =  (float) tot_hits / tot_acessos;
-                miss_ratio = (float) 1 - hit_ratio;
+                hit_ratio =  (float) ((tot_hits * 100) / tot_acessos);
+                miss_ratio = (float) 100 - hit_ratio;
             }
         }
         
@@ -471,6 +489,16 @@ public class InterfaceCache extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_gerar_txtActionPerformed
+
+    
+    //--------------------- Gerar o gráfico das caches ----------------------------------------------------------------------------
+    private void gera_graficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gera_graficoActionPerformed
+       
+       
+        grafico.criarGrafico();
+        
+        
+    }//GEN-LAST:event_gera_graficoActionPerformed
     //-------------------------------------------------------------------------------------------------------------------------------
    
     
@@ -511,10 +539,12 @@ public class InterfaceCache extends javax.swing.JFrame {
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_enviar;
+    private javax.swing.JButton gera_grafico;
     private javax.swing.JLabel gerador;
     private javax.swing.JButton gerador_enderecos;
     private javax.swing.JLabel geradortxt;
     private javax.swing.JButton gerar_txt;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label_mapeamento;
